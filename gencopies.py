@@ -23,6 +23,19 @@ def generate_copies():
 		shutil.copy(base_pdf, dest)
 
 
+# Checks whether copy destination folder is empty
+def check_dest_empty(dir):
+	contents = os.listdir(dir)
+	if contents:
+		print("WARNING: copies directory already contains files:")
+		for f in contents:
+			print(' - ', f)
+		ans = input("Would you like to continue? (Y/N): ")
+		return ans.lower() == 'y'
+	else:
+		return True
+
+
 # Check whether or not the required files are in the working directory
 def check_resources():
 	wdir = os.path.dirname(os.path.realpath(__name__))
@@ -39,6 +52,8 @@ def check_resources():
 	if not os.path.exists(cp):
 		print("ERROR: copies directory not found")
 		clear = False
+	else:
+		clear = check_dest_empty(cp)
 	return clear
 
 
@@ -48,3 +63,5 @@ if __name__ == "__main__":
 		print('Generating copies...')
 		generate_copies()
 		print('Complete')
+	else:
+		print("Exiting")
