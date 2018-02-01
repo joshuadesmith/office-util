@@ -1,19 +1,25 @@
 # gencopies.py
 # Written by Josh Smith
 # Creates copies of a pdf file
+# 	1. Move PDF to be copied into the same directory as this file
+#	2. Rename the PDF 'base.pdf'
+#	3. List the desired file names for the copies in a file named filelisting.txt
+#	4. run python gencopies.py
+# 
+# NOTE: ONLY TESTED ON WINDOWS OS
 
 import shutil, os
 
-wdir = 'C:\\Users\\joshua\\Desktop\\'
-fnl = 'filelisting.txt'
-ftbc = 'base.pdf'
-dest = 'Quigley\\'
+wdir = os.path.dirname(os.path.realpath(__name__))
+listing_txt = os.path.realpath('filelisting.txt')
+base_pdf = os.path.realpath('base.pdf')
+copy_dest = os.path.realpath('copies')
 
 
-# Get file paths for fnl and ftbc
+# Get file paths for listing_txt and base_pdf
 def get_filepaths():
-	base = wdir + ftbc
-	listing = wdir + fnl
+	base = wdir + base_pdf
+	listing = wdir + listing_txt
 	return base, listing
 
 
@@ -23,22 +29,22 @@ def get_dest_path():
 
 
 # Generates copies of the specified PDF with names in array
-def generate_copies(file_to_copy, file_names):
-	dest_path = get_dest_path()
+def generate_copies(file_names):
 	for name in file_names:
-		dest = dest_path + name.strip() + '.pdf'
-		shutil.copy(file_to_copy, dest)
+		dest = copy_dest + '\\' + name + '.pdf'
+		shutil.copy(base_pdf, dest)
 
 
 # Generates documents given TEXT FILE with file name listing
-def generate_documents(base_file, text_file):
-	names = open(text_file, mode='r', encoding='utf-8').readlines()
-	generate_copies(base_file, names)
+def generate_documents():
+	names = open(listing_txt, mode='r', encoding='utf-8').read().splitlines()
+	for name in names:
+		dest = copy_dest + '\\' + name + '.pdf'
+		shutil.copy(base_pdf, dest)
 
 
 # Main Module
 if __name__ == "__main__":
-	print('Generating copies of base.pdf')
-	base, listing = get_filepaths()
-	generate_documents(base, listing)
-	print('Process complete')
+	print('Generating copies...')
+	generate_documents()
+	print('Complete')
