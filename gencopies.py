@@ -16,27 +16,8 @@ base_pdf = os.path.realpath('base.pdf')
 copy_dest = os.path.realpath('copies')
 
 
-# Get file paths for listing_txt and base_pdf
-def get_filepaths():
-	base = wdir + base_pdf
-	listing = wdir + listing_txt
-	return base, listing
-
-
-# Get path to destination folder
-def get_dest_path():
-	return wdir + dest
-
-
-# Generates copies of the specified PDF with names in array
-def generate_copies(file_names):
-	for name in file_names:
-		dest = copy_dest + '\\' + name + '.pdf'
-		shutil.copy(base_pdf, dest)
-
-
 # Generates documents given TEXT FILE with file name listing
-def generate_documents():
+def generate_copies():
 	names = open(listing_txt, mode='r', encoding='utf-8').read().splitlines()
 	for name in names:
 		dest = copy_dest + '\\' + name + '.pdf'
@@ -46,5 +27,5 @@ def generate_documents():
 # Main Module
 if __name__ == "__main__":
 	print('Generating copies...')
-	generate_documents()
+	generate_copies()
 	print('Complete')
