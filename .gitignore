@@ -1,4 +1,4 @@
 *.txt
 base.pdf
 copies/*.pdf
-
+sort_affs/sortdir/**
