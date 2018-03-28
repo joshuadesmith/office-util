@@ -1,4 +1,6 @@
 *.txt
 base.pdf
 copies/*.pdf
-sort_affs/sortdir/**
+sort_affs/sortdir/*.*
+missing_file_check/*.txt
+missing_file_check/files/*.*
